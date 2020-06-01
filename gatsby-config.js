@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/unsecurelab',
   siteMetadata: {
     title: 'Tech Blog',
     siteDescription: 'Tech Blog - A blog by Vimalraj Selvam',
