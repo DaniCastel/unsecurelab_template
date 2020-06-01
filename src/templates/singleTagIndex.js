@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Layout from '../components/layout'
-import Posts from '../components/posts'
+import Members from '../components/members'
 
 export default ({ data, pageContext }) => {
   const { posts, tagName } = pageContext
@@ -9,7 +9,7 @@ export default ({ data, pageContext }) => {
   return (
     <Layout>
       <h1>Posts about {tagName}</h1>
-      <Posts data={posts} />
+      <Members data={posts} />
     </Layout>
   )
 }

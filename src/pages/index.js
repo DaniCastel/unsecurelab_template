@@ -1,12 +1,11 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-
 import Layout from '../components/layout'
-import Posts from '../components/posts'
-
+import Members from '../components/members'
+import './pages.css'
 export default ({ data }) => (
   <Layout>
-    <Posts data={data.allMarkdownRemark.edges} />
+    <Members data={data.allMarkdownRemark.edges} />
   </Layout>
 )
 
@@ -22,6 +21,13 @@ export const query = graphql`
           id
           frontmatter {
             name
+            memberImage {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             academics
             email
             date(formatString: "DD MMMM, YYYY")

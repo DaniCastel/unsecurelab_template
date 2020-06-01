@@ -1,5 +1,6 @@
 ---
 name: 'Jorge E. Camargo, PhD'
+memberImage: JorgeCamargo.jpg
 academics: 'PhD in Systems and Computing Engineering, MSc in Systems and Computing Engineering, BSc in Systems and Computing Engineering.'
 date: '2018-11-23'
 email: 'jecamargom (at) unal.edu.co'

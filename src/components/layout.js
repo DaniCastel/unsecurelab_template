@@ -16,7 +16,8 @@ const Content = styled.div`
   flex: 1;
   overflow: scroll;
   padding: 20px;
-  color: #7e7e7e;
+  background-color: var(--color-grey-light-2);
+  color: #333;
 `
 
 const Query = graphql`
@@ -24,7 +25,7 @@ const Query = graphql`
     site {
       siteMetadata {
         title
-        authorName
+        siteDescription
       }
     }
   }
@@ -33,8 +34,8 @@ const Query = graphql`
 export default ({ children }) => (
   <StaticQuery
     query={Query}
-    render={data => {
-      const { title, siteDescription, authorName } = data.site.siteMetadata
+    render={(data) => {
+      const { title, siteDescription } = data.site.siteMetadata
       return (
         <>
           <Helmet>
@@ -43,7 +44,7 @@ export default ({ children }) => (
             <title>{title}</title>
           </Helmet>
           <Container>
-            <Sidebar title={title} authorName={authorName} />
+            <Sidebar title={title} siteDescription={siteDescription} />
             <Content>{children}</Content>
           </Container>
         </>
