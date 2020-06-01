@@ -29,7 +29,7 @@ export default ({ data }) => {
             <PostDate>{node.frontmatter.date}</PostDate>{' '}
             <PostTags tags={node.frontmatter.tags} />
             <PostLink to={node.fields.slug}>
-              <PostTitle>{node.frontmatter.title} </PostTitle>
+              <PostTitle>{node.frontmatter.name} </PostTitle>
             </PostLink>
             <p>{node.excerpt}</p>
             <hr />

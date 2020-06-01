@@ -17,7 +17,7 @@ export default ({ data }) => {
     <Layout>
       <PostWrapper>
         <span className="datetime">{post.frontmatter.date}</span>
-        <h1>{post.frontmatter.title}</h1>
+        <h1>{post.frontmatter.name}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
         <hr />
         <p>
@@ -33,7 +33,7 @@ export const query = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
-        title
+        name
         date(formatString: "DD MMMM, YYYY")
         tags
       }

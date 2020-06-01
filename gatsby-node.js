@@ -21,7 +21,7 @@ const createTagPages = (createPage, posts) => {
 
   posts.forEach(({ node }) => {
     if (node.frontmatter.tags) {
-      node.frontmatter.tags.forEach(tag => {
+      node.frontmatter.tags.forEach((tag) => {
         if (!postsByTag[tag]) {
           postsByTag[tag] = []
         }
@@ -40,7 +40,7 @@ const createTagPages = (createPage, posts) => {
     }
   })
 
-  tags.forEach(tagName => {
+  tags.forEach((tagName) => {
     const posts = postsByTag[tagName]
 
     createPage({
@@ -68,7 +68,7 @@ exports.createPages = ({ graphql, actions }) => {
                 slug
               }
               frontmatter {
-                title
+                name
                 date(formatString: "DD MMMM, YYYY")
                 tags
               }
@@ -76,7 +76,7 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
-    `).then(result => {
+    `).then((result) => {
       const posts = result.data.allMarkdownRemark.edges
 
       createTagPages(createPage, posts)

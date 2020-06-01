@@ -1,7 +1,7 @@
 module.exports = {
   pathPrefix: '/unsecurelab',
   siteMetadata: {
-    title: 'Tech Blog',
+    title: 'unsecurelab',
     siteDescription: 'Tech Blog - A blog by Vimalraj Selvam',
     authorName: 'Vimalraj Selvam'
   },
@@ -24,9 +24,10 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'src',
-        path: `${__dirname}/src/blog-posts`
+        path: `${__dirname}/src/member-cards`
       }
     },
+
     {
       resolve: 'gatsby-plugin-typography',
       options: {

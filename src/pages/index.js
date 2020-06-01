@@ -21,7 +21,9 @@ export const query = graphql`
           }
           id
           frontmatter {
-            title
+            name
+            academics
+            email
             date(formatString: "DD MMMM, YYYY")
             tags
           }
