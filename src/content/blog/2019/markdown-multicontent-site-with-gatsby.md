@@ -21,7 +21,7 @@ One of its most definite advantages is the ability to **obtain content from many
 - Contentful
 - Markdown files
 
-In this article, we will focus on the last one to build a page with separated sections organized by folders containing the different types of posts (**blog**, **projects**, and **talks**).
+In this article, we will focus on the last one to build a page with separated sections organized by folders containing the different types of posts (**blog**, **projects**, and **member**).
 
 ## Files hierarchy
 
@@ -36,7 +36,7 @@ In this article, we will focus on the last one to build a page with separated se
 |
 --------some-project-post.md
 |
-----talks
+----member
 |
 --------some-talk-post.md
 ```
@@ -71,8 +71,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        path: `${__dirname}/src/content/talks`,
-        name: 'talks',
+        path: `${__dirname}/src/content/member`,
+        name: 'member',
       },
     },
     `gatsby-transformer-remark`,
@@ -83,27 +83,27 @@ module.exports = {
 
 ## Templates
 
-For each **section**, we want to define a **template** for the posts list and optionally one for the post detail (the links for the talks and projects are external, so only the blog has detail page).
+For each **section**, we want to define a **template** for the posts list and optionally one for the post detail (the links for the member and projects are external, so only the blog has detail page).
 
 ### List page example
 
 ```jsx
 // src/templates/blog-list.js
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from 'react'
+import { graphql } from 'gatsby'
 
-import { BlogList } from '../components/scenes';
+import { BlogList } from '../components/scenes'
 
 export default ({ data, pageContext }) => {
-  const { currentPage, numPages } = pageContext;
+  const { currentPage, numPages } = pageContext
   return (
     <BlogList
       posts={data.allMarkdownRemark.edges}
       currentPage={currentPage}
       numPages={numPages}
     />
-  );
-};
+  )
+}
 
 export const query = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
@@ -133,7 +133,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Let's analyze what's happening here:
@@ -146,15 +146,15 @@ Let's analyze what's happening here:
 ### Detail page example
 
 ```jsx
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from 'react'
+import { graphql } from 'gatsby'
 
-import { BlogPost } from '../components/scenes';
+import { BlogPost } from '../components/scenes'
 
 export default ({ data }) => {
-  const post = data.markdownRemark;
-  return <BlogPost post={post} />;
-};
+  const post = data.markdownRemark
+  return <BlogPost post={post} />
+}
 
 export const query = graphql`
   query($slug: String!) {
@@ -169,7 +169,7 @@ export const query = graphql`
       html
     }
   }
-`;
+`
 ```
 
 This case is even simpler, as there is no pagination or collection type involved. The query receives **a slug as parameter**. The data is passed then to a functional component.
@@ -190,32 +190,32 @@ To maintain our file clean, we are going to create a folder called `gatsby`, wit
 ### gatsby-node.js
 
 ```js
-exports.onCreateNode = require('./gatsby/on-create-node');
-exports.createPages = require('./gatsby/create-pages');
+exports.onCreateNode = require('./gatsby/on-create-node')
+exports.createPages = require('./gatsby/create-pages')
 ```
 
 ### on-create-node.js
 
 ```js
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 module.exports = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions;
+  const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
-    const collection = getNode(node.parent).sourceInstanceName;
-    const slug = createFilePath({ node, getNode, basePath: `pages` });
+    const collection = getNode(node.parent).sourceInstanceName
+    const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
       node,
       name: 'collection',
-      value: collection,
-    });
+      value: collection
+    })
     createNodeField({
       node,
       name: `slug`,
-      value: `/${collection}${slug}`,
-    });
+      value: `/${collection}${slug}`
+    })
   }
-};
+}
 ```
 
 With this hook, we are telling Gatsby to add two new fields when the node is created. We can access those fields later with GraphQL, to filter the pages by collection and to obtain the detail for a determined slug (which includes the collection).
@@ -228,53 +228,52 @@ const COLLECTIONS = [
   {
     name: 'blog',
     postsPerPage: 12,
-    hasPostPage: true,
+    hasPostPage: true
   },
   {
-    name: 'talks',
+    name: 'member',
     postsPerPage: 12,
-    hasPostPage: false,
+    hasPostPage: false
   },
   {
     name: 'projects',
     postsPerPage: 12,
-    hasPostPage: false,
-  },
-];
+    hasPostPage: false
+  }
+]
 
-const filterEdges = name => edges =>
-  edges.filter(edge => edge.node.fields.collection === name);
+const filterEdges = (name) => (edges) =>
+  edges.filter((edge) => edge.node.fields.collection === name)
 
 const buildPagesCollectionGenerator = ({ edges, createPage }) => ({
   name,
   postsPerPage,
-  hasPostPage,
+  hasPostPage
 }) => {
-  const filteredEdges = filterEdges(name)(edges);
+  const filteredEdges = filterEdges(name)(edges)
 
   /**
    * CREATE INDIVIDUAL ITEMS
    */
   if (hasPostPage) {
     filteredEdges.forEach((edge, index) => {
-      const { slug } = edge.node.fields;
-      const previous =
-        index === edges.length - 1 ? null : edges[index + 1].node;
-      const next = index === 0 ? null : edges[index - 1].node;
+      const { slug } = edge.node.fields
+      const previous = index === edges.length - 1 ? null : edges[index + 1].node
+      const next = index === 0 ? null : edges[index - 1].node
       createPage({
         path: slug,
         component: require.resolve(`../src/templates/${name}-post.js`),
-        context: { slug, previous, next },
-      });
-    });
+        context: { slug, previous, next }
+      })
+    })
   }
 
   /**
    * CREATE ITEMS LISTS
    */
-  const numPages = Math.ceil(filteredEdges.length / postsPerPage);
+  const numPages = Math.ceil(filteredEdges.length / postsPerPage)
   Array.from({ length: numPages }).forEach((_, idx) => {
-    const currentPage = idx + 1;
+    const currentPage = idx + 1
     createPage({
       path: idx === 0 ? `/${name}` : `/${name}/${currentPage}`,
       component: require.resolve(`../src/templates/${name}-list.js`),
@@ -282,14 +281,14 @@ const buildPagesCollectionGenerator = ({ edges, createPage }) => ({
         limit: postsPerPage,
         skip: idx * postsPerPage,
         numPages,
-        currentPage,
-      },
-    });
-  });
-};
+        currentPage
+      }
+    })
+  })
+}
 
-module.exports = async function({ actions, graphql }) {
-  const { createPage } = actions;
+module.exports = async function ({ actions, graphql }) {
+  const { createPage } = actions
 
   const { data } = await graphql(`
     query {
@@ -311,15 +310,15 @@ module.exports = async function({ actions, graphql }) {
         }
       }
     }
-  `);
+  `)
 
   const pagesCollectionGenerator = buildPagesCollectionGenerator({
     edges: data.allMarkdownRemark.edges,
-    createPage,
-  });
+    createPage
+  })
 
-  COLLECTIONS.forEach(pagesCollectionGenerator);
-};
+  COLLECTIONS.forEach(pagesCollectionGenerator)
+}
 ```
 
 Let's analyze what's happening in this hook:

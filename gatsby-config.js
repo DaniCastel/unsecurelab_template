@@ -30,13 +30,6 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'src',
-        path: `${__dirname}/src/member-cards`
-      }
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
         path: `${__dirname}/src/content/blog`,
         name: 'blog'
       }
@@ -51,8 +44,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        path: `${__dirname}/src/content/talks`,
-        name: 'talks'
+        path: `${__dirname}/src/content/members`,
+        name: 'members'
       }
     },
     {

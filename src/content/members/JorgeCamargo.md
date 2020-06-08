@@ -6,6 +6,7 @@ academics: 'PhD in Systems and Computing Engineering, MSc in Systems and Computi
 date: '2018-11-23'
 email: 'jecamargom (at) unal.edu.co'
 tags: ['Tema 1', 'Tema 2']
+visible: true
 ---
 
 Born in Bogotá, Colombia, Assistant Professor in the Systems and Industrial Engineering Department at Universidad Nacional de Colombia

@@ -152,15 +152,16 @@ export default ({ title, description }) => (
     <MenuWrapper>
       <div>
         <p>
+          <StyledLink to="/">
+            <FaHome /> <span>Home</span>
+          </StyledLink>
+        </p>
+        <p>
           <StyledLink to="/about">
             <FaUserSecret /> <span>About</span>
           </StyledLink>
         </p>
-        <p>
-          <StyledLink to="/">
-            <FaHome /> <span>Members</span>
-          </StyledLink>
-        </p>
+
         <p>
           <StyledLink to="/tags">
             <FaHashtag /> <span>Tags</span>
@@ -168,6 +169,11 @@ export default ({ title, description }) => (
         </p>
       </div>
       <div>
+        <p>
+          <StyledLink to="/members">
+            <FaUserSecret /> <span>Members</span>
+          </StyledLink>
+        </p>
         <p>
           <StyledHref
             href="https://www.linkedin.com/in/vimalraj-selvam/"

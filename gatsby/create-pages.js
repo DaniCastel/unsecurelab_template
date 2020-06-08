@@ -1,56 +1,55 @@
-const siteConfig = require('../siteConfig');
+const siteConfig = require('../siteConfig')
 
 const COLLECTIONS = [
   {
     name: 'blog',
     postsPerPage: siteConfig.perPage.blog || siteConfig.perPage.default,
-    hasPostPage: true,
+    hasPostPage: true
   },
   {
-    name: 'talks',
-    postsPerPage: siteConfig.perPage.talks || siteConfig.perPage.default,
-    hasPostPage: false,
+    name: 'members',
+    postsPerPage: siteConfig.perPage.members || siteConfig.perPage.default,
+    hasPostPage: false
   },
   {
     name: 'projects',
     postsPerPage: siteConfig.perPage.projects || siteConfig.perPage.default,
-    hasPostPage: false,
-  },
-];
+    hasPostPage: false
+  }
+]
 
-const filterEdges = name => edges =>
-  edges.filter(edge => edge.node.fields.collection === name);
+const filterEdges = (name) => (edges) =>
+  edges.filter((edge) => edge.node.fields.collection === name)
 
 const buildPagesCollectionGenerator = ({ edges, createPage }) => ({
   name,
   postsPerPage,
-  hasPostPage,
+  hasPostPage
 }) => {
-  const filteredEdges = filterEdges(name)(edges);
+  const filteredEdges = filterEdges(name)(edges)
 
   /**
    * CREATE INDIVIDUAL ITEMS
    */
   if (hasPostPage) {
     filteredEdges.forEach((edge, index) => {
-      const { slug } = edge.node.fields;
-      const previous =
-        index === edges.length - 1 ? null : edges[index + 1].node;
-      const next = index === 0 ? null : edges[index - 1].node;
+      const { slug } = edge.node.fields
+      const previous = index === edges.length - 1 ? null : edges[index + 1].node
+      const next = index === 0 ? null : edges[index - 1].node
       createPage({
         path: slug,
         component: require.resolve(`../src/templates/${name}-post.js`),
-        context: { slug, previous, next },
-      });
-    });
+        context: { slug, previous, next }
+      })
+    })
   }
 
   /**
    * CREATE ITEMS LISTS
    */
-  const numPages = Math.ceil(filteredEdges.length / postsPerPage);
+  const numPages = Math.ceil(filteredEdges.length / postsPerPage)
   Array.from({ length: numPages }).forEach((_, idx) => {
-    const currentPage = idx + 1;
+    const currentPage = idx + 1
     createPage({
       path: idx === 0 ? `/${name}` : `/${name}/${currentPage}`,
       component: require.resolve(`../src/templates/${name}-list.js`),
@@ -58,14 +57,14 @@ const buildPagesCollectionGenerator = ({ edges, createPage }) => ({
         limit: postsPerPage,
         skip: idx * postsPerPage,
         numPages,
-        currentPage,
-      },
-    });
-  });
-};
+        currentPage
+      }
+    })
+  })
+}
 
-module.exports = async function({ actions, graphql }) {
-  const { createPage } = actions;
+module.exports = async function ({ actions, graphql }) {
+  const { createPage } = actions
 
   const { data } = await graphql(`
     query {
@@ -87,12 +86,12 @@ module.exports = async function({ actions, graphql }) {
         }
       }
     }
-  `);
+  `)
 
   const pagesCollectionGenerator = buildPagesCollectionGenerator({
     edges: data.allMarkdownRemark.edges,
-    createPage,
-  });
+    createPage
+  })
 
-  COLLECTIONS.forEach(pagesCollectionGenerator);
-};
+  COLLECTIONS.forEach(pagesCollectionGenerator)
+}
