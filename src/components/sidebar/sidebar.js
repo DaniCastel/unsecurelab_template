@@ -11,6 +11,7 @@ import {
 import MainImg from '../main-img'
 
 const Sidebar = styled.div`
+  position: relative;
   /* Device = Tablets, iPads (portrait) */
   @media (min-width: 768px) and (max-width: 1024px) {
     width: 20%;
@@ -36,8 +37,11 @@ const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  background-image: url('./background.jpg');
-  /* background-image: linear-gradient(to right, #011638, #27476e); */
+  background-image: linear-gradient(
+    to right,
+    rgba(1, 22, 56, 0.8),
+    rgba(39, 71, 110, 0.8)
+  );
   color: white;
   justify-content: center;
   align-items: center;
@@ -136,7 +140,7 @@ const NameBoard = styled.h5`
 
 export default ({ title, description }) => (
   <Sidebar>
-    <MainImg></MainImg>
+    <MainImg />
     <StyledLink to="/">
       <SiteTitle>{title}</SiteTitle>
     </StyledLink>
