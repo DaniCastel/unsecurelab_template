@@ -3,7 +3,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 
-import Sidebar from './sidebar'
+import Sidebar from '../sidebar/sidebar'
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const Query = graphql`
     site {
       siteMetadata {
         title
-        siteDescription
+        description
       }
     }
   }
@@ -35,16 +35,16 @@ export default ({ children }) => (
   <StaticQuery
     query={Query}
     render={(data) => {
-      const { title, siteDescription } = data.site.siteMetadata
+      const { title, description } = data.site.siteMetadata
       return (
         <>
           <Helmet>
             <meta charSet="utf-8" />
-            <meta name="description" content={siteDescription} />
+            <meta name="description" content={description} />
             <title>{title}</title>
           </Helmet>
           <Container>
-            <Sidebar title={title} siteDescription={siteDescription} />
+            <Sidebar title={title} description={description} />
             <Content>{children}</Content>
           </Container>
         </>

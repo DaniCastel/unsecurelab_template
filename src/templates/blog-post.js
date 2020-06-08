@@ -1,42 +1,28 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import styled from 'styled-components'
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import Layout from '../components/layout'
-import PostTags from '../components/postTags'
-import { PostWrapper } from '../components/postwrapper'
-
-const StyledTag = styled.span`
-  font-style: italic;
-`
+import { BlogPost } from '../components/scenes';
 
 export default ({ data }) => {
-  const post = data.markdownRemark
-
-  return (
-    <Layout>
-      <PostWrapper>
-        <span className="datetime">{post.frontmatter.date}</span>
-        <h1>{post.frontmatter.name}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr />
-        <p>
-          <StyledTag>Tags</StyledTag>: <PostTags tags={post.frontmatter.tags} />
-        </p>
-      </PostWrapper>
-    </Layout>
-  )
-}
+  const post = data.markdownRemark;
+  return <BlogPost post={post} />;
+};
 
 export const query = graphql`
   query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
       frontmatter {
-        name
-        date(formatString: "DD MMMM, YYYY")
+        title
+        subtitle
+        rawDate: date
+        date(formatString: "DD MMMM YYYY")
         tags
       }
+      fields {
+        slug
+      }
+      timeToRead
+      html
     }
   }
-`
+`;

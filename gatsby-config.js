@@ -1,9 +1,13 @@
+const siteConfig = require('./siteConfig')
+
 module.exports = {
   pathPrefix: '/unsecurelab',
   siteMetadata: {
-    title: 'unsecurelab',
-    siteDescription: 'Research group',
-    authorName: 'Vimalraj Selvam'
+    title: siteConfig.title,
+    description: siteConfig.description,
+    author: siteConfig.author,
+    verificationID: siteConfig.verificationID,
+    siteUrl: siteConfig.siteUrl
   },
   plugins: [
     `gatsby-plugin-sharp`,
@@ -30,7 +34,27 @@ module.exports = {
         path: `${__dirname}/src/member-cards`
       }
     },
-
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/content/blog`,
+        name: 'blog'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/content/projects`,
+        name: 'projects'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/content/talks`,
+        name: 'talks'
+      }
+    },
     {
       resolve: 'gatsby-plugin-typography',
       options: {
