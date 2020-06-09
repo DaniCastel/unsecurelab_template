@@ -6,7 +6,8 @@ import {
   FaUserSecret,
   FaLinkedin,
   FaGithub,
-  FaHashtag
+  FaHashtag,
+  FaNewspaper
 } from 'react-icons/fa'
 import MainImg from '../main-img'
 
@@ -157,8 +158,8 @@ export default ({ title, description }) => (
           </StyledLink>
         </p>
         <p>
-          <StyledLink to="/about">
-            <FaUserSecret /> <span>About</span>
+          <StyledLink to="/blog">
+            <FaNewspaper /> <span>Projects</span>
           </StyledLink>
         </p>
 

@@ -14,6 +14,7 @@ export default ({ data, pageContext }) => {
 export const query = graphql`
   query membersListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
+      sort: { fields: [frontmatter___order], order: ASC }
       filter: {
         fields: { collection: { eq: "members" } }
         frontmatter: { visible: { ne: false } }

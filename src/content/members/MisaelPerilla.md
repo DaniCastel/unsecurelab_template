@@ -6,6 +6,7 @@ academics: 'BSc in Systems Engineering - Universidad de Cundinamarca Colombia, M
 date: '2018-11-23'
 email: 'jecamargom (at) unal.edu.co'
 tags: ['tag1', 'tag2', 'tag3']
+order: 3
 visible: true
 ---
 
